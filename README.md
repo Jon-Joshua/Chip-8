@@ -1,6 +1,6 @@
 ## Chip 8 Interpreter
 ​
-Simple Chip 8 Interpreter in C++
+Simple Chip 8 Interpreter in C++ using SDL lib.
 
 Todo:
 * Sound
