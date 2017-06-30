@@ -16,7 +16,8 @@ int main(int argc, char *args[]) {
 	Keyboard key = Keyboard();
 	CPU cpu = CPU(&mem, &dis, &key);
 
-	char* path = "C:\\Users\\Jon\\Documents\\visual studio 2015\\Projects\\WindowsFormsApplication1\\WindowsFormsApplication1\\Roms\\PONG";
+	// Path to ROM file
+	char* path = "";
 
 	if (mem.loadRom(path)) {
 		cout << "Rom loaded into memory" << endl;
@@ -52,7 +53,6 @@ int main(int argc, char *args[]) {
 		} else {
 			Sleep(1);
 		}
-		Sleep(100);
 	}
 	return 0;
 }

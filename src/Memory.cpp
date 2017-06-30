@@ -37,9 +37,9 @@ void Memory::init() {
 		0xF0, 0x80, 0xF0, 0x80, 0x80 // F
 	};
 
-	//for (int x = 0; x < sizeof(font); x++) {
-	//	mem[x] = font[x];
-	//}
+	for (int x = 0; x < sizeof(font); x++) {
+		mem[x] = font[x];
+	}
 
 }
 
