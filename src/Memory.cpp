@@ -1,0 +1,73 @@
+#include "Memory.h"
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <Windows.h>
+using namespace std;
+
+Memory::Memory() {
+	init();
+	printf("Loaded font into ram. \n");
+}
+
+void Memory::init() {
+
+	//memset(mem, 0, sizeof(mem));
+
+	for (int x = 0; x < sizeof(mem); x++) {
+		mem[x] = 0;
+	}
+
+	unsigned char font[80] = {
+		0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
+		0x20, 0x60, 0x20, 0x20, 0x70, // 1
+		0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
+		0xF0, 0x10, 0xF0, 0x10, 0xF0, // 3
+		0x90, 0x90, 0xF0, 0x10, 0x10, // 4
+		0xF0, 0x80, 0xF0, 0x10, 0xF0, // 5
+		0xF0, 0x80, 0xF0, 0x90, 0xF0, // 6
+		0xF0, 0x10, 0x20, 0x40, 0x40, // 7
+		0xF0, 0x90, 0xF0, 0x90, 0xF0, // 8
+		0xF0, 0x90, 0xF0, 0x10, 0xF0, // 9
+		0xF0, 0x90, 0xF0, 0x90, 0x90, // A
+		0xE0, 0x90, 0xE0, 0x90, 0xE0, // B
+		0xF0, 0x80, 0x80, 0x80, 0xF0, // C
+		0xE0, 0x90, 0x90, 0x90, 0xE0, // D
+		0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
+		0xF0, 0x80, 0xF0, 0x80, 0x80 // F
+	};
+
+	//for (int x = 0; x < sizeof(font); x++) {
+	//	mem[x] = font[x];
+	//}
+
+}
+
+unsigned char Memory::getByte(int addr) {
+	return mem[addr];
+}
+
+void Memory::setByte(int addr, uint8_t data) {
+	mem[addr] = data;
+}
+
+int Memory::loadRom(char* path) {
+
+	std::streampos size;
+
+	std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
+	if (file.is_open()) {
+		size = file.tellg();
+		if (size > 0xFFF - 0x200) {
+			std::cout << "Error: ROM too big" << std::endl;
+			return 0;
+		}
+		file.seekg(0, std::ios::beg);
+		file.read((char*) &mem[0x200], size);
+		file.close();
+	} else {
+		std::cout << "Unable to open " << path << std::endl;
+		return 0;
+	}
+	return 1;
+}
